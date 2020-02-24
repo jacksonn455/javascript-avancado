@@ -26,37 +26,19 @@ class NegociacaoController {
         this._limpaFormulario();   
     }
     
-    importaNegociacao(){
+    importaNegociacoes() {
         
-        let xhr = XMLHttpRequest();  // ajax na mão
-        xhr.open('Get', 'negociacoes/semana'); // metodo e endereço
-
-        xhr.onreadystatechange = () => {  // toda hora que a função muda de estado chama a função
-            if(xhr.readyState == 4) {
-                if(xhr.status == 200) { //status de erro, poderíamos colocar 400 ou 500
-                    console.log('Obtendo as negociações do servidor.')
-                } else {
-                    console.log('Não foi possível obter as negociações do servidor.')
-                }
-            }
-        }
-
-        /*
-        0: requisição ainda não iniciada
-
-        1: conexão com o servidor estabelecida
-
-        2: requisição recebida
-
-        3: processando requisição
-
-        4: requisição está concluída e a resposta está pronta
-        */
-
-        xhr.send();
-
+        
+        let service = new NegociacaoService();
+        service
+            .obterNegociacoes()
+            .then(negociacoes => negociacoes.forEach(negociacao => {
+                this._listaNegociacoes.adiciona(negociacao);
+                this._mensagem.texto = 'Negociações do período importadas'   
+            }))
+            .catch(erro => this._mensagem.texto = erro);               
     }
-
+    
     apaga() {
         
         this._listaNegociacoes.esvazia();
