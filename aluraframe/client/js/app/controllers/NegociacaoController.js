@@ -3,38 +3,64 @@ class NegociacaoController {
     constructor() {
         
         let $ = document.querySelector.bind(document);
+        
         this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
-        let self = this;
-
-        this._listaNegociacoes = ProxyFactory.create(new ListaNegociacoes(), ["adiciona", "esvazia"], (model) =>
-         {
-            this._negociacoesView.update(model);
-        });
-      
-        this._negociacoesView = new NegociacoesView($('#negociacoesView'));
-        this._negociacoesView.update(this._listaNegociacoes);
-        
-        this._mensagem = ProxyFactory.create(
-            new Mensagem(), ['texto'], model =>
-                this._mensagemView.update(model));
-        this._mensagemView = new MensagemView($('#mensagemView'));  
+         
+        this._listaNegociacoes = new Bind(
+            new ListaNegociacoes(), 
+            new NegociacoesView($('#negociacoesView')), 
+            'adiciona', 'esvazia');
+       
+        this._mensagem = new Bind(
+            new Mensagem(), new MensagemView($('#mensagemView')),
+            'texto');       
     }
     
     adiciona(event) {
-
+        
         event.preventDefault();
-
         this._listaNegociacoes.adiciona(this._criaNegociacao());
-        this._mensagem.texto     = 'Negociação adicionada com sucesso';  
-        this._limpaFormulario()  
+        this._mensagem.texto = 'Negociação adicionada com sucesso'; 
+        this._limpaFormulario();   
+    }
+    
+    importaNegociacao(){
+        
+        let xhr = XMLHttpRequest();  // ajax na mão
+        xhr.open('Get', 'negociacoes/semana'); // metodo e endereço
+
+        xhr.onreadystatechange = () => {  // toda hora que a função muda de estado chama a função
+            if(xhr.readyState == 4) {
+                if(xhr.status == 200) { //status de erro, poderíamos colocar 400 ou 500
+                    console.log('Obtendo as negociações do servidor.')
+                } else {
+                    console.log('Não foi possível obter as negociações do servidor.')
+                }
+            }
+        }
+
+        /*
+        0: requisição ainda não iniciada
+
+        1: conexão com o servidor estabelecida
+
+        2: requisição recebida
+
+        3: processando requisição
+
+        4: requisição está concluída e a resposta está pronta
+        */
+
+        xhr.send();
+
     }
 
     apaga() {
-
-        this._listaNegociacoes.esvazia();;
-        this._mensagem.texto = "Negociações removidas com sucesso";
+        
+        this._listaNegociacoes.esvazia();
+        this._mensagem.texto = 'Negociações apagadas com sucesso';
     }
     
     _criaNegociacao() {
