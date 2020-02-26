@@ -13,5 +13,5 @@ JavaScript avançado
 - Combatendo Callback Hell com Promises
 - Considerações finais e exercícios bônus
 --------------------
- ![](https://github.com/jacksonn455/javascript-avancado/blob/master/aluraframe/client/imagem.png)
+ ![](https://github.com/jacksonn455/javascript-avancado/blob/master/imagem.png)
 
