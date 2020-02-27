@@ -12,6 +12,15 @@ JavaScript avançado
 - Importando negociações
 - Combatendo Callback Hell com Promises
 - Considerações finais e exercícios bônus
+- Atividades Concluidas
+- Guardando negociações offline com IndexedDB
+- Gerenciando nossa conexão com o pattern Factory
+- Padronizando acesso aos dados com o pattern DAO
+- Lapidando um pouco mais nossa aplicação
+- Simplificando requisições Ajax com a Fetch API
+- Tornando nosso código ainda mais compatível usando Babel
+- Trabalhando com módulos do ES2015!
+
 --------------------
- ![](https://github.com/jacksonn455/javascript-avancado/blob/master/aluraframe/client/imagem.png)
+ ![](https://github.com/jacksonn455/javascript-avancado/blob/master/imagem.png)
 
